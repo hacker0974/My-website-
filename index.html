@@ -1,0 +1,374 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Business Model Canvas</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one drafted sheet. Nine canvas cells divided by hairlines, unit economics beneath. */
+:root {
+  --bg: #EEF1F4;
+  --surface: #FFFFFF;
+  --ink: #15212C;
+  --muted: #5B6B7A;
+  --line: #C3CED8;
+  --accent: #0B6E6E;
+  --accent-soft: #DCEFEE;
+  --good: #1B7A3E;
+  --bad: #B3321F;
+  --font-display: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
+  --font-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0F161C; --surface: #17212A; --ink: #E6EDF3; --muted: #8EA0B0; --line: #2C3A46;
+    --accent: #4CC3BE; --accent-soft: #14383A; --good: #5CCB86; --bad: #F08A78;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0F161C; --surface: #17212A; --ink: #E6EDF3; --muted: #8EA0B0; --line: #2C3A46;
+  --accent: #4CC3BE; --accent-soft: #14383A; --good: #5CCB86; --bad: #F08A78;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.5;
+  padding-block: 28px 56px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.wrap { max-width: 1240px; margin: 0 auto; display: flex; flex-direction: column; gap: 28px; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+header { display: flex; flex-wrap: wrap; gap: 16px 32px; justify-content: space-between; align-items: flex-end; }
+.head-text { min-width: 0; flex: 1 1 380px; display: flex; flex-direction: column; gap: 6px; }
+.eyebrow { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+h1 {
+  font-family: var(--font-display); font-weight: 700; font-size: clamp(32px, 6vw, 56px);
+  line-height: 1.02; letter-spacing: -0.02em; margin: 0; text-wrap: balance; overflow-wrap: anywhere;
+}
+.tagline { font-size: 17px; color: var(--muted); margin: 0; max-width: 62ch; }
+[contenteditable]:hover { background: color-mix(in srgb, var(--accent) 7%, transparent); }
+[contenteditable]:focus { outline: 2px solid var(--accent); outline-offset: 3px; background: transparent; }
+.actions { display: flex; gap: 8px; flex-wrap: wrap; }
+button {
+  font: inherit; font-size: 13px; color: var(--ink); background: var(--surface);
+  border: 1px solid var(--line); border-radius: 3px; padding: 7px 12px; cursor: pointer;
+}
+button:hover { border-color: var(--accent); color: var(--accent); }
+
+/* Canvas */
+.canvas {
+  display: grid; gap: 1px; background: var(--line); border: 1px solid var(--line);
+  grid-template-columns: repeat(10, minmax(0, 1fr));
+  grid-template-areas:
+    "partners partners activities activities value value relationships relationships segments segments"
+    "partners partners resources resources value value channels channels segments segments"
+    "costs costs costs costs costs revenue revenue revenue revenue revenue";
+}
+.cell { background: var(--surface); padding: 16px 16px 12px; display: flex; flex-direction: column; gap: 10px; min-width: 0; min-height: 190px; }
+.cell.value { background: var(--accent-soft); }
+.cell-head { display: flex; flex-direction: column; gap: 2px; }
+.cell-label { font-family: var(--font-display); font-weight: 700; font-size: 17px; letter-spacing: -0.01em; }
+.cell-prompt { font-family: var(--font-mono); font-size: 11px; color: var(--muted); letter-spacing: 0.02em; }
+.cell ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; flex: 1; }
+.cell li { display: flex; gap: 6px; align-items: flex-start; }
+.cell li::before { content: ""; flex: none; width: 5px; height: 5px; margin-top: 9px; background: var(--accent); }
+.item { flex: 1; min-width: 0; overflow-wrap: anywhere; padding: 1px 3px; border-radius: 2px; }
+.rm { flex: none; padding: 0 6px; border: none; background: transparent; color: var(--muted); font-size: 16px; line-height: 22px; opacity: 0; }
+li:hover .rm, .rm:focus-visible { opacity: 1; }
+.rm:hover { color: var(--bad); border: none; }
+.add { align-self: flex-start; font-family: var(--font-mono); font-size: 12px; color: var(--muted); border: 1px dashed var(--line); background: transparent; }
+.c-partners { grid-area: partners; } .c-activities { grid-area: activities; } .c-resources { grid-area: resources; }
+.c-value { grid-area: value; } .c-relationships { grid-area: relationships; } .c-channels { grid-area: channels; }
+.c-segments { grid-area: segments; } .c-costs { grid-area: costs; } .c-revenue { grid-area: revenue; }
+
+/* Unit economics */
+.econ { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); }
+.econ > div { background: var(--surface); padding: 20px; min-width: 0; }
+.econ h2 { font-family: var(--font-display); font-size: 22px; margin: 0 0 4px; letter-spacing: -0.01em; }
+.econ .note { color: var(--muted); font-size: 13px; margin: 0 0 16px; }
+.fields { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px 16px; }
+.field { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.field label { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+.input-wrap { display: flex; align-items: center; border: 1px solid var(--line); border-radius: 3px; background: var(--bg); }
+.input-wrap:focus-within { border-color: var(--accent); outline: 2px solid var(--accent); outline-offset: 1px; }
+.input-wrap span { padding-left: 10px; color: var(--muted); font-family: var(--font-mono); }
+.input-wrap input { flex: 1; min-width: 0; width: 100%; font: inherit; font-variant-numeric: tabular-nums; color: var(--ink); background: transparent; border: none; padding: 8px 10px; outline: none; }
+.results { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); margin-top: 14px; }
+.res { background: var(--surface); padding: 12px 14px; display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.res .k { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+.res .v { font-family: var(--font-display); font-weight: 700; font-size: 24px; font-variant-numeric: tabular-nums; letter-spacing: -0.01em; overflow-wrap: anywhere; }
+.pill { display: inline-block; font-family: var(--font-mono); font-size: 12px; padding: 3px 9px; border-radius: 99px; border: 1px solid currentColor; }
+.pill.good { color: var(--good); } .pill.bad { color: var(--bad); }
+.status-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+
+@media (max-width: 900px) {
+  .canvas {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: "segments" "value" "channels" "relationships" "revenue" "resources" "activities" "partners" "costs";
+  }
+  .cell { min-height: 0; }
+  .econ { grid-template-columns: minmax(0, 1fr); }
+  .rm { opacity: 1; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  button, .rm { transition: color 0.15s, border-color 0.15s, opacity 0.15s; }
+}
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="head-text">
+      <span class="eyebrow">Business Model Canvas · click any text to edit</span>
+      <h1 id="biz-name" contenteditable="true" spellcheck="false"></h1>
+      <p id="biz-tag" class="tagline" contenteditable="true" spellcheck="false"></p>
+    </div>
+    <div class="actions">
+      <button id="reset" type="button">Reset to sample</button>
+    </div>
+  </header>
+
+  <main class="canvas" id="canvas" aria-label="Business model canvas"></main>
+
+  <section class="econ" aria-label="Unit economics">
+    <div>
+      <h2>Unit economics</h2>
+      <p class="note">One unit is whatever you sell once. The sample uses a single tiffin meal. Amounts are in rupees per month unless stated.</p>
+      <div class="fields" id="fields"></div>
+    </div>
+    <div>
+      <h2>What the model earns</h2>
+      <p class="note">Updates as you type.</p>
+      <div class="status-row"><span id="status" class="pill good">Above break-even</span><span id="status-note" class="note" style="margin:0"></span></div>
+      <div class="results" id="results"></div>
+    </div>
+  </section>
+</div>
+
+<script>
+(function () {
+  var KEY = "bmc-dabba-v1";
+  var BLOCKS = [
+    { k: "partners", label: "Key partners", prompt: "Who helps us deliver?" },
+    { k: "activities", label: "Key activities", prompt: "What must we do every day?" },
+    { k: "resources", label: "Key resources", prompt: "What do we need to own or hold?" },
+    { k: "value", label: "Value propositions", prompt: "What problem do we solve?" },
+    { k: "relationships", label: "Customer relationships", prompt: "How do we keep customers?" },
+    { k: "channels", label: "Channels", prompt: "How do customers find and receive us?" },
+    { k: "segments", label: "Customer segments", prompt: "Who are we for?" },
+    { k: "costs", label: "Cost structure", prompt: "Where does the money go?" },
+    { k: "revenue", label: "Revenue streams", prompt: "How does the money come in?" }
+  ];
+  var FIELDS = [
+    { id: "price", label: "Price per unit", pre: "₹" },
+    { id: "food", label: "Ingredients and packing per unit", pre: "₹" },
+    { id: "delivery", label: "Delivery per unit", pre: "₹" },
+    { id: "customers", label: "Active customers", pre: "#" },
+    { id: "units", label: "Units per customer per month", pre: "#" },
+    { id: "fixed", label: "Fixed costs per month", pre: "₹" }
+  ];
+  var SAMPLE = {
+    name: "Dabba Co.",
+    tag: "Home-style tiffin subscriptions for office workers in Bengaluru, delivered before 12:30.",
+    blocks: {
+      partners: ["Home cooks from three neighbourhoods", "Bike-courier co-operative", "Tech park facility managers", "UPI payment gateway"],
+      activities: ["Daily menu planning", "Batch cooking and packing", "Route planning for lunch delivery", "Subscription billing and support"],
+      resources: ["Central kitchen, 1,200 sq ft", "Delivery app and route optimiser", "FSSAI licence", "Steel tiffin carriers"],
+      value: ["Hot home-style lunch at your desk", "Weekly rotating menu, no repeats", "Pause or skip any day by 8 pm", "Cheaper than ordering in daily"],
+      relationships: ["WhatsApp support, replies within 10 minutes", "Monthly menu vote", "Referral credit of ₹300"],
+      channels: ["Tech park noticeboards and lobby stands", "Instagram and WhatsApp groups", "Office HR wellness programmes", "Our own ordering app"],
+      segments: ["Office workers, 25 to 40, no time to cook", "Small startups without a canteen", "Paying guests and hostel residents"],
+      costs: ["Ingredients and packing", "Kitchen rent and utilities", "Cooks and packers", "Courier fees", "App hosting and payment fees"],
+      revenue: ["Monthly meal subscriptions", "Pay-per-meal top-ups", "Corporate bulk plans at 8% discount"]
+    },
+    econ: { price: 140, food: 62, delivery: 18, customers: 220, units: 22, fixed: 210000 }
+  };
+
+  var state = load();
+  function clone(o) { return JSON.parse(JSON.stringify(o)); }
+  function load() {
+    try {
+      var raw = localStorage.getItem(KEY);
+      if (raw) {
+        var s = JSON.parse(raw);
+        if (s && s.blocks && s.econ && typeof s.name === "string") return s;
+      }
+    } catch (e) {}
+    return clone(SAMPLE);
+  }
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {} }
+
+  /* Header text */
+  var nameEl = document.getElementById("biz-name");
+  var tagEl = document.getElementById("biz-tag");
+  function bindText(el, prop) {
+    el.textContent = state[prop];
+    el.addEventListener("input", function () { state[prop] = el.textContent; save(); });
+    el.addEventListener("keydown", function (e) { if (e.key === "Enter") { e.preventDefault(); el.blur(); } });
+    el.addEventListener("paste", plainPaste);
+  }
+  function plainPaste(e) {
+    e.preventDefault();
+    var t = (e.clipboardData || window.clipboardData).getData("text").replace(/\s*\n\s*/g, " ");
+    document.execCommand("insertText", false, t);
+  }
+
+  /* Canvas */
+  var canvas = document.getElementById("canvas");
+  BLOCKS.forEach(function (b) {
+    var cell = document.createElement("section");
+    cell.className = "cell c-" + b.k + (b.k === "value" ? " value" : "");
+    var head = document.createElement("div");
+    head.className = "cell-head";
+    head.innerHTML = '<span class="cell-label"></span><span class="cell-prompt"></span>';
+    head.children[0].textContent = b.label;
+    head.children[1].textContent = b.prompt;
+    var ul = document.createElement("ul");
+    ul.id = "list-" + b.k;
+    var add = document.createElement("button");
+    add.type = "button"; add.className = "add"; add.textContent = "+ Add";
+    add.addEventListener("click", function () { addItem(b.k, state.blocks[b.k].length); });
+    cell.appendChild(head); cell.appendChild(ul); cell.appendChild(add);
+    canvas.appendChild(cell);
+  });
+
+  function addItem(k, at, focus) {
+    state.blocks[k].splice(at, 0, "");
+    renderList(k, at);
+    save();
+  }
+  function renderList(k, focusIndex) {
+    var ul = document.getElementById("list-" + k);
+    ul.textContent = "";
+    var focusEl = null;
+    state.blocks[k].forEach(function (text, i) {
+      var li = document.createElement("li");
+      var s = document.createElement("span");
+      s.className = "item";
+      s.setAttribute("contenteditable", "true");
+      s.spellcheck = false;
+      s.textContent = text;
+      s.addEventListener("input", function () { state.blocks[k][i] = s.textContent; save(); });
+      s.addEventListener("paste", plainPaste);
+      s.addEventListener("keydown", function (e) {
+        if (e.key === "Enter") { e.preventDefault(); addItem(k, i + 1); }
+      });
+      s.addEventListener("blur", function () {
+        if (!s.textContent.trim() && li.isConnected && state.blocks[k][i] !== undefined) {
+          state.blocks[k].splice(i, 1);
+          renderList(k);
+          save();
+        }
+      });
+      var rm = document.createElement("button");
+      rm.type = "button"; rm.className = "rm"; rm.textContent = "×";
+      rm.setAttribute("aria-label", "Remove item");
+      rm.addEventListener("click", function () { state.blocks[k].splice(i, 1); renderList(k); save(); });
+      li.appendChild(s); li.appendChild(rm);
+      ul.appendChild(li);
+      if (i === focusIndex) focusEl = s;
+    });
+    if (focusEl) focusEl.focus();
+  }
+
+  /* Unit economics */
+  var fieldsEl = document.getElementById("fields");
+  FIELDS.forEach(function (f) {
+    var wrap = document.createElement("div");
+    wrap.className = "field";
+    var lab = document.createElement("label");
+    lab.setAttribute("for", "f-" + f.id); lab.textContent = f.label;
+    var box = document.createElement("div");
+    box.className = "input-wrap";
+    var pre = document.createElement("span"); pre.textContent = f.pre;
+    var inp = document.createElement("input");
+    inp.id = "f-" + f.id; inp.type = "number"; inp.min = "0"; inp.step = "any"; inp.inputMode = "decimal";
+    inp.value = state.econ[f.id];
+    inp.addEventListener("input", function () {
+      var n = parseFloat(inp.value);
+      state.econ[f.id] = isFinite(n) && n >= 0 ? n : 0;
+      save(); compute();
+    });
+    box.appendChild(pre); box.appendChild(inp);
+    wrap.appendChild(lab); wrap.appendChild(box);
+    fieldsEl.appendChild(wrap);
+  });
+
+  var inr = function (n) {
+    var sign = n < 0 ? "-" : "";
+    return sign + "₹" + Math.abs(Math.round(n)).toLocaleString("en-IN");
+  };
+  function compute() {
+    var e = state.econ;
+    var perUnit = e.price - e.food - e.delivery;
+    var units = e.customers * e.units;
+    var revenue = units * e.price;
+    var contribution = units * perUnit;
+    var profit = contribution - e.fixed;
+    var perCustomer = perUnit * e.units;
+    var breakEven = perCustomer > 0 ? Math.ceil(e.fixed / perCustomer) : null;
+    var margin = revenue > 0 ? (profit / revenue) * 100 : 0;
+    var rows = [
+      ["Revenue per month", inr(revenue)],
+      ["Margin per unit", inr(perUnit)],
+      ["Profit per month", inr(profit)],
+      ["Profit margin", (Math.round(margin * 10) / 10) + "%"],
+      ["Break-even customers", breakEven === null ? "Not reachable" : breakEven.toLocaleString("en-IN")],
+      ["Customer lifetime gap", e.customers && breakEven !== null ? (e.customers - breakEven >= 0 ? "+" : "") + (e.customers - breakEven).toLocaleString("en-IN") + " customers" : "n/a"]
+    ];
+    var res = document.getElementById("results");
+    res.textContent = "";
+    rows.forEach(function (r) {
+      var d = document.createElement("div"); d.className = "res";
+      var k = document.createElement("span"); k.className = "k"; k.textContent = r[0] === "Customer lifetime gap" ? "Customers above break-even" : r[0];
+      var v = document.createElement("span"); v.className = "v"; v.textContent = r[1];
+      d.appendChild(k); d.appendChild(v); res.appendChild(d);
+    });
+    var st = document.getElementById("status");
+    var note = document.getElementById("status-note");
+    if (breakEven === null) {
+      st.className = "pill bad"; st.textContent = "No margin per unit";
+      note.textContent = "Price is not above the cost of each unit.";
+    } else if (profit >= 0) {
+      st.className = "pill good"; st.textContent = "Above break-even";
+      note.textContent = "Fixed costs are covered at " + breakEven.toLocaleString("en-IN") + " customers.";
+    } else {
+      st.className = "pill bad"; st.textContent = "Below break-even";
+      note.textContent = "You need " + breakEven.toLocaleString("en-IN") + " customers to cover fixed costs.";
+    }
+  }
+
+  /* Reset with in-page confirmation */
+  var resetBtn = document.getElementById("reset");
+  var resetTimer = null;
+  resetBtn.addEventListener("click", function () {
+    if (!resetTimer) {
+      resetBtn.textContent = "Click again to confirm";
+      resetTimer = setTimeout(function () { resetBtn.textContent = "Reset to sample"; resetTimer = null; }, 3000);
+      return;
+    }
+    clearTimeout(resetTimer); resetTimer = null;
+    resetBtn.textContent = "Reset to sample";
+    state = clone(SAMPLE);
+    save();
+    nameEl.textContent = state.name; tagEl.textContent = state.tag;
+    BLOCKS.forEach(function (b) { renderList(b.k); });
+    FIELDS.forEach(function (f) { document.getElementById("f-" + f.id).value = state.econ[f.id]; });
+    compute();
+  });
+
+  bindText(nameEl, "name");
+  bindText(tagEl, "tag");
+  BLOCKS.forEach(function (b) { renderList(b.k); });
+  compute();
+})();
+</script>
+
+</body></html>
